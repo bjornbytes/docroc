@@ -1,32 +1,5 @@
 local rocdoc = {}
 
-rocdoc.processors = {
-  description = function(body)
-    return {
-      text = body
-    }
-  end,
-
-  arg = function(body)
-    local name = body:match('^%s*(%w+)') or body:match('^%s*%b{}%s*(%w+)')
-    local description = body:match('%-%s*(.*)$')
-    local optional, default
-    local type = body:match('^%s*(%b{})'):sub(2, -2):gsub('(%=)(.*)', function(_, value)
-      optional = true
-      default = value
-      return ''
-    end)
-
-    return {
-      type = type,
-      name = name,
-      description = description,
-      optional = optional,
-      default = default
-    }
-  end
-}
-
 function rocdoc.process(filename)
   local file = io.open(filename, 'r')
   local text = file:read('*a')
@@ -55,5 +28,52 @@ function rocdoc.process(filename)
 
   return comments
 end
+
+rocdoc.processors = {
+  description = function(body)
+    return {
+      text = body
+    }
+  end,
+
+  arg = function(body)
+    local name = body:match('^%s*(%w+)') or body:match('^%s*%b{}%s*(%w+)')
+    local description = body:match('%-%s*(.*)$')
+    local optional, default
+    local type = body:match('^%s*(%b{})'):sub(2, -2):gsub('(%=)(.*)', function(_, value)
+      optional = true
+      default = value
+      return ''
+    end)
+
+    return {
+      type = type,
+      name = name,
+      description = description,
+      optional = optional,
+      default = default
+    }
+  end,
+
+  returns = function(body)
+    local type
+    body:gsub('^%s*(%b{})', function(match)
+      type = match:sub(2, -2)
+      return ''
+    end)
+    local description = body:match('^%s*(.*)')
+
+    return {
+      type = type,
+      description = description
+    }
+  end,
+
+  class = function(body)
+    return {
+      name = body
+    }
+  end
+}
 
 return rocdoc
