@@ -17,10 +17,13 @@ function rocdoc.process(filename)
 
     local tags = {}
     chunk:gsub('@(%w+)%s?([^@]*)', function(name, body)
+      body = body:gsub('(%s+)$', '')
       local processor = rocdoc.processors[name]
       local tag = processor and processor(body) or {}
       tag.tag = name
       tag.raw = body
+      tags[name] = tags[name] or {}
+      table.insert(tags[name], tag)
       table.insert(tags, tag)
     end)
 
@@ -47,6 +50,7 @@ rocdoc.processors = {
     local type = body:match('^%s*(%b{})'):sub(2, -2):gsub('(%=)(.*)', function(_, value)
       optional = true
       default = value
+      if #default == 0 then default = nil end
       return ''
     end)
 
