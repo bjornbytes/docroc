@@ -1,3 +1,7 @@
+-- docroc - Lua documentation generator
+-- -- https://github.com/bjornbytes/docroc
+-- -- License - MIT, see LICENSE for details.
+
 local rocdoc = {}
 
 function rocdoc.process(filename)
