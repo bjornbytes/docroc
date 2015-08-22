@@ -9,9 +9,9 @@ rocdoc.processors = {
 
   arg = function(body)
     local name = body:match('^%s*(%w+)') or body:match('^%s*%b{}%s*(%w+)')
-    local description = body:match('%-(.*)$')
+    local description = body:match('%-%s*(.*)$')
     local optional, default
-    local type = body:match('^%s*(%b{})'):sub(2, -2):gsub('(%=)(.+)', function(_, value)
+    local type = body:match('^%s*(%b{})'):sub(2, -2):gsub('(%=)(.*)', function(_, value)
       optional = true
       default = value
       return ''
@@ -20,12 +20,14 @@ rocdoc.processors = {
     return {
       type = type,
       name = name,
-      description = description
+      description = description,
+      optional = optional,
+      default = default
     }
   end
 }
 
-function rocdoc.process(filename, format)
+function rocdoc.process(filename)
   local file = io.open(filename, 'r')
   local text = file:read('*a')
   file:close()
@@ -40,7 +42,7 @@ function rocdoc.process(filename, format)
     chunk:gsub('@(%w+)%s?([^@]*)', function(name, body)
       local processor = rocdoc.processors[name]
       local tag = processor and processor(body) or {}
-      tag.name = name
+      tag.tag = name
       tag.raw = body
       table.insert(tags, tag)
     end)
@@ -51,7 +53,7 @@ function rocdoc.process(filename, format)
     })
   end)
 
-  return format and format(comments) or comments
+  return comments
 end
 
 return rocdoc
