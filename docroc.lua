@@ -1,6 +1,6 @@
 -- docroc - Lua documentation generator
--- -- https://github.com/bjornbytes/docroc
--- -- License - MIT, see LICENSE for details.
+-- https://github.com/bjornbytes/docroc
+-- License - MIT, see LICENSE for details.
 
 local rocdoc = {}
 
