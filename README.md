@@ -11,11 +11,11 @@ local docroc = require 'docroc'
 local comments = docroc.process('file.lua')
 ```
 
-`comments` is now a table of comment blocks in the file, each with a table of `tags` and a `context` key. The `tags` table is an array of each tag, but also groups the tags by type. The `context` key is a string containing the contents of the line after the comment block.
+`comments` is now a table of comment blocks in the file, each with a table of `tags` and a `context` key. The `tags` table is an array of the tags, but also groups the tags by type. The `context` key is a string containing the contents of the line after the comment block.
 
 Notes on parsing:
 
-- A comment block must start with three dashes. It ends on the next non-commentented line.
+- A comment block must start with three dashes. It ends on the next non-commented line.
 - Tags are recognized as any sequence of letters that start with `@`, and continue until the next tag is encountered. The first tag is implicitly `@description`.
 
 Example
@@ -29,7 +29,7 @@ Go from this:
 -- @returns {number}
 function greet(name)
   print('hi', name)
-  return 3, 4
+  return 3
 end
 ```
 
