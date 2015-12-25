@@ -88,9 +88,10 @@ Now, if we process a file containing the following:
 
 ```lua
 --- @customTag hello world
+local test
 ```
 
-We would get the following:
+We would get this:
 
 ```lua
 {
@@ -103,11 +104,11 @@ We would get the following:
 
 For convenience, docroc provides a default set of custom processors:
 
-- **arg**: Collects information on an argument to a function, including the `type` of the argument,
+- `@arg`: Collects information on an argument to a function, including the `type` of the argument,
 whether or not it is `optional`, whether or not it has a `default` value, its `name`, and a
 `description`.  The expected structure is `@arg {<type>=<default>} <name> - <description>`, all of
 which are optional.  An equals sign after the type represents an optional argument.
-- **returns**: Similar to `@arg`, contains information on a return value of the function.  It
+- `@returns`: Similar to `@arg`, contains information on a return value of the function.  It
 returns `type` and `description` keys, and expects a structure of `@returns {<type>} <description>`.
 
 Related
