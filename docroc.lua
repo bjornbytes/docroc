@@ -1,4 +1,4 @@
--- docroc - Lua documentation generator
+-- docroc v0.1.0 - Lua documentation generator
 -- https://github.com/bjornbytes/docroc
 -- License - MIT, see LICENSE for details.
 
