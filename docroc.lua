@@ -37,12 +37,6 @@ function docroc.process(filename)
 end
 
 docroc.processors = {
-  description = function(body)
-    return {
-      text = body
-    }
-  end,
-
   arg = function(body)
     local name = body:match('^%s*(%w+)') or body:match('^%s*%b{}%s*(%w+)')
     local description = body:match('%-%s*(.*)$')
@@ -74,12 +68,6 @@ docroc.processors = {
     return {
       type = type,
       description = description
-    }
-  end,
-
-  class = function(body)
-    return {
-      name = body
     }
   end
 }
