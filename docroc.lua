@@ -21,7 +21,7 @@ function docroc.process(filename)
       local processor = docroc.processors[name]
       local tag = processor and processor(body) or {}
       tag.tag = name
-      tag.raw = body
+      tag.text = body
       tags[name] = tags[name] or {}
       table.insert(tags[name], tag)
       table.insert(tags, tag)
